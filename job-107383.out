@@ -8,3 +8,4 @@ Downloading https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz to ../cifar-
 [2024/02/04 01:04:57] - Epoch 	 Train Time 	 Test Time 	 LR 	 	 Train Loss 	 Train Acc 	 Train Robust Loss 	 Train Robust Acc 	 Test Loss 	 Test Acc 	 Test Robust Loss 	 Test Robust Acc
 Extracting ../cifar-data/cifar-10-python.tar.gz to ../cifar-data
 Files already downloaded and verified
+[2024/02/04 01:07:12] - 0 	 115.5 	 	 19.7 	 	 0.1000 	 2.0078 	 0.2636 	 2.1792 	 	 0.1898 	 	 1.8322 	 0.3423 	 2.0382 	 	 0.2552
