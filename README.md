@@ -1,1 +1,2 @@
 # Overfitting In RML
+In this course project, we investigate overfitting of deep learning models under adversarial training conditions. Specifically, the idea is to compare two standard adversarial training techniques, FGSM and PGD, and compare their loss curves and investigate their overfitting. We also use data augmentation techniques such as CutOut and Mixup inorder to generate more variety of data, and potentially delay, if not avoid overfitting totally.
