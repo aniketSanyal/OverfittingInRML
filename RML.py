@@ -530,20 +530,13 @@ class Args:
     chkpt_iters = 10
     
 if __name__ == "__main__":
-    print('*' * 50)
-    print('pgd PreActResNet18')
-    print('*' * 50)
     args = Args()
     main()
-    print('*' * 50)
-    print('fgsm PreActResNet18')
-    print('*' * 50)
+
     args = Args()
     args.attack = 'fgsm'
     main()
-    print('*' * 50)
-    print('pgd with cutout & mixup PreActResNet18')
-    print('*' * 50)
+
     args = Args()
     args.attack = 'pgd'
     args.cutout = True
@@ -551,9 +544,7 @@ if __name__ == "__main__":
     args.cutout_len = 16
     args.mixup_alpha = 1
     main()
-    print('*' * 50)
-    print('fgsm with cutout & mixup PreActResNet18')
-    print('*' * 50)
+
     args = Args()
     args.attack = 'fgsm'
     args.cutout = True
@@ -561,42 +552,24 @@ if __name__ == "__main__":
     args.cutout_len = 16
     args.mixup_alpha = 1
     main()
-    print('*' * 50)
-    print('pgd WideResNet')
-    print('*' * 50)
+
     args = Args()
     args.model == 'WideResNet'
-    # args.attack = 'fgsm'
-    # args.cutout = True
-    # args.mixup = True
-    # args.cutout_len = 16
-    # args.mixup_alpha = 1
     main()
-    print('*' * 50)
-    print('fgsm WideResNet')
-    print('*' * 50)
+
     args = Args()
     args.model == 'WideResNet'
     args.attack = 'fgsm'
-    # args.cutout = True
-    # args.mixup = True
-    # args.cutout_len = 16
-    # args.mixup_alpha = 1
     main()
-    print('*' * 50)
-    print('pgd with cutout & mixup WideResNet')
-    print('*' * 50)
+
     args = Args()
     args.model == 'WideResNet'
-    # args.attack = 'fgsm'
     args.cutout = True
     args.mixup = True
     args.cutout_len = 16
     args.mixup_alpha = 1
     main()
-    print('*' * 50)
-    print('fgsm with cutout & mixup WideResNet')
-    print('*' * 50)
+
     args = Args()
     args.model == 'WideResNet'
     args.attack = 'fgsm'
