@@ -9,7 +9,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from preactresnet import PreActResNet18
-from utils import (upper_limit, lower_limit, std, clamp, get_loaders,
+from utils_free_fgsm import (upper_limit, lower_limit, std, clamp, get_loaders,
     evaluate_pgd, evaluate_standard)
 
 logger = logging.getLogger(__name__)
