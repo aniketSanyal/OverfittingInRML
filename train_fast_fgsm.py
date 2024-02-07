@@ -14,6 +14,22 @@ from utils_free_fgsm import (upper_limit, lower_limit, std, clamp, get_loaders,
 
 logger = logging.getLogger(__name__)
 
+class MyArgs:
+    batch_size = 128
+    data_dir = '../../cifar-data'
+    epochs = 200
+    lr_schedule = 'cyclic'
+    lr_min = 0.0
+    lr_max = 0.04
+    weight_decay = 5e-4
+    momentum = 0.9
+    epsilon = 8
+    minibatch_replays = 8
+    out_dir = 'train_free_output'
+    seed = 0
+    opt_level = 'O2'
+    loss_scale = '1.0'
+    master_weights = False
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -124,7 +140,7 @@ def main():
 
     logger.info('Test Loss \t Test Acc \t PGD Loss \t PGD Acc')
     logger.info('%.4f \t \t %.4f \t %.4f \t %.4f', test_loss, test_acc, pgd_loss, pgd_acc)
+    
 
 
-if __name__ == "__main__":
-    main()
+main()
