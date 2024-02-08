@@ -1,7 +1,9 @@
 import argparse
 import logging
+import sys  # 导入系统库
 import os
 import time
+import math  # 导入数学库
 
 import numpy as np
 import torch
@@ -59,16 +61,8 @@ def main():
 
     if not os.path.exists(args.out_dir):
         os.mkdir(args.out_dir)
-    logfile = os.path.join(args.out_dir, 'output.log')
-    if os.path.exists(logfile):
-        os.remove(logfile)
 
-    logging.basicConfig(
-        format='[%(asctime)s] - %(message)s',
-        datefmt='%Y/%m/%d %H:%M:%S',
-        level=logging.INFO,
-        filename=logfile)
-    logger.info(args)
+    print(args)  # Changed from logger.info to print
 
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
@@ -82,9 +76,9 @@ def main():
     model.train()
 
     opt = torch.optim.SGD(model.parameters(), lr=args.lr_max, momentum=args.momentum, weight_decay=args.weight_decay)
-    amp_args = dict(opt_level=args.opt_level, loss_scale=args.loss_scale, verbosity=False)
-    if args.opt_level == 'O2':
-        amp_args['master_weights'] = args.master_weights
+    if args.opt_level == 'O2' and args.master_weights:
+        # Additional handling if needed for master_weights
+        pass
     criterion = nn.CrossEntropyLoss()
 
     delta = torch.zeros(args.batch_size, 3, 32, 32).cuda()
@@ -99,7 +93,7 @@ def main():
 
     # Training
     start_train_time = time.time()
-    logger.info('Epoch \t Seconds \t LR \t \t Train Loss \t Train Acc')
+    print('Epoch \t Seconds \t LR \t \t Train Loss \t Train Acc')  # Changed from logger.info to print
     for epoch in range(args.epochs):
         start_epoch_time = time.time()
         train_loss = 0
@@ -122,12 +116,11 @@ def main():
             train_acc += (output.max(1)[1] == y).sum().item()
             train_n += y.size(0)
         epoch_time = time.time()
-        lr = scheduler.get_lr()[0]
-        logger.info('%d \t %.1f \t \t %.4f \t %.4f \t %.4f',
-            epoch, epoch_time - start_epoch_time, lr, train_loss/train_n, train_acc/train_n)
+        lr = scheduler.get_last_lr()[0]
+        print(f'{epoch} \t {epoch_time - start_epoch_time:.1f} \t {lr:.4f} \t {train_loss/train_n:.4f} \t {train_acc/train_n:.4f}')  # Changed from logger.info to print
     train_time = time.time()
     torch.save(model.state_dict(), os.path.join(args.out_dir, 'model.pth'))
-    logger.info('Total train time: %.4f minutes', (train_time - start_train_time)/60)
+    print(f'Total train time: {(train_time - start_train_time)/60:.4f} minutes')  # Changed from logger.info to print
 
     # Evaluation
     model_test = PreActResNet18().cuda()
@@ -138,9 +131,9 @@ def main():
     pgd_loss, pgd_acc = evaluate_pgd(test_loader, model_test, 50, 10)
     test_loss, test_acc = evaluate_standard(test_loader, model_test)
 
-    logger.info('Test Loss \t Test Acc \t PGD Loss \t PGD Acc')
-    logger.info('%.4f \t \t %.4f \t %.4f \t %.4f', test_loss, test_acc, pgd_loss, pgd_acc)
-    
+    print(f'Test Loss \t Test Acc \t PGD Loss \t PGD Acc')  # Changed from logger.info to print
+    print(f'{test_loss:.4f} \t {test_acc:.4f} \t {pgd_loss:.4f} \t {pgd_acc:.4f}')  # Changed from logger.info to print
 
 
-main()
+if __name__ == "__main__":
+    main()
